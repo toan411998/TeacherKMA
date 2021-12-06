@@ -1,5 +1,6 @@
 package com.example.teacherkma.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,18 +8,29 @@ import android.widget.Button
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teacherkma.R
-import java.util.ArrayList
+import com.example.teacherkma.utils.DatePickerFragment
+import com.example.teacherkma.utils.getDaysAgo
+import java.text.SimpleDateFormat
+import java.util.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import com.example.teacherkma.ui.dashboard.DashboardFragment
 
-class HeaderAdapter: RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
+
+class HeaderAdapter(context: Context?) : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
 
     private var flowerCount: Int = 0
+    private var context: Context? = null
+
     var onClickListener: DetailsAdapterListener? = null
 
-//    fun HeaderAdapter(
-//        listener: DetailsAdapterListener?
-//    ) {
-//        onClickListener = listener
-//    }
+    public var isStudy: Boolean = false
+    public var startDate: String = ""
+    public var endDate: String = ""
+
+    fun HeaderAdapter(context: Context?) {
+        this.context = context
+    }
 
     /* ViewHolder for displaying header. */
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -26,8 +38,8 @@ class HeaderAdapter: RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
         
         val radioButtonTeach: RadioButton = itemView.findViewById(R.id.radioButtonTeach)
         val radioButtonStudy: RadioButton = itemView.findViewById(R.id.radioButtonStudy)
-        val buttonStartTime: Button = itemView.findViewById(R.id.buttonStartTime)
-        val buttonEndTime: Button = itemView.findViewById(R.id.buttonEndTime)
+        val buttonStartDate: Button = itemView.findViewById(R.id.buttonStartDate)
+        val buttonEndDate: Button = itemView.findViewById(R.id.buttonEndDate)
         val buttonSearch: Button = itemView.findViewById(R.id.buttonSearch)
 
         fun bind(flowerCount: Int) {
@@ -46,7 +58,38 @@ class HeaderAdapter: RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         holder.bind(flowerCount)
         holder.radioButtonTeach.setOnClickListener {
-            onClickListener?.onClickStudy(it)
+//            onClickListener?.onClickTeach(it)
+            isStudy = false
+        }
+        holder.radioButtonStudy.setOnClickListener {
+//            onClickListener?.onClickStudy(it)
+            isStudy = true
+        }
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        holder.buttonEndDate.text = currentDate.toString()
+        val beforeDate = sdf.format(getDaysAgo(7))
+        holder.buttonStartDate.text = beforeDate.toString()
+
+        holder.buttonStartDate.setOnClickListener {
+            val pickerStartDate = DatePickerFragment()
+            val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+            pickerStartDate.show(manager, "startDate")
+            pickerStartDate.getDate(holder.buttonStartDate, context as AppCompatActivity)
+        }
+
+        holder.buttonEndDate.setOnClickListener {
+            val pickerStartDate = DatePickerFragment()
+            val manager: FragmentManager = (context as AppCompatActivity).supportFragmentManager
+            pickerStartDate.show(manager, "endDate")
+            pickerStartDate.getDate(holder.buttonEndDate, context as AppCompatActivity)
+        }
+
+        holder.buttonSearch.setOnClickListener {
+            startDate = holder.buttonStartDate.text.toString()
+            endDate = holder.buttonEndDate.text.toString()
+            onClickListener?.onClickSearch(it)
         }
     }
 
@@ -63,8 +106,9 @@ class HeaderAdapter: RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
 
     //region Interface Details listener
     interface DetailsAdapterListener {
-        fun onClickStudy(v: View?)
-//        fun onClickDes(v: View?, position: Int)
+//        fun onClickStudy(v: View?)
+//        fun onClickTeach(v: View?)
+        fun onClickSearch(v: View?)
     }
     //endregion
 }

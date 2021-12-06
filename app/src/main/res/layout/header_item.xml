@@ -43,13 +43,13 @@
 
     <Button
         android:text="Ngày bắt đầu"
-        android:id="@+id/buttonStartTime"
+        android:id="@+id/buttonStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
         android:text="Ngày kết thúc"
-        android:id="@+id/buttonEndTime"
+        android:id="@+id/buttonEndDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

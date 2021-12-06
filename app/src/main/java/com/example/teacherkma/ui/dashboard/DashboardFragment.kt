@@ -43,7 +43,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
 
     var dailyWorkList : ArrayList<DailyWorkModel> = ArrayList()
 
-    var headerAdapter = HeaderAdapter()
+    var headerAdapter = HeaderAdapter(context)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,10 +80,16 @@ class DashboardFragment : Fragment(), View.OnClickListener {
             textView.text = it
         })
 
+        headerAdapter = HeaderAdapter(context)
+        headerAdapter.HeaderAdapter(context)
+
         headerAdapter.onClickListener = object : HeaderAdapter.DetailsAdapterListener {
-            override fun onClickStudy(v: View?) {
-                println("Heello")
+            override fun onClickSearch(v: View?) {
+                println(headerAdapter.isStudy)
+                println(headerAdapter.startDate)
+                println(headerAdapter.endDate)
             }
+
         }
 
 
