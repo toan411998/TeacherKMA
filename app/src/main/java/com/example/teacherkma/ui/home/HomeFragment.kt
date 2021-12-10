@@ -8,8 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.teacherkma.R
 import com.example.teacherkma.databinding.FragmentHomeBinding
+import java.util.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -31,10 +35,20 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+//        val textView: TextView = binding.textHome
+//        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+//            textView.text = it
+//        })
+        val imageSlider: ImageSlider = binding.imageSlider
+        val imgList = ArrayList<SlideModel>()
+        imgList.add(SlideModel(R.drawable.kma1, ScaleTypes.FIT))
+        imgList.add(SlideModel(R.drawable.kma2, ScaleTypes.FIT))
+        imgList.add(SlideModel(R.drawable.kma3, ScaleTypes.FIT))
+        imgList.add(SlideModel(R.drawable.kma4, ScaleTypes.FIT))
+
+        imageSlider.setImageList(imgList, ScaleTypes.FIT)
+        imageSlider.startSliding(3000)
+
         return root
     }
 

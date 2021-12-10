@@ -3,13 +3,16 @@ package com.example.teacherkma.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teacherkma.R
 import com.example.teacherkma.model.DailyWorkModel
+import org.json.JSONObject
 
 
 class CustomAdapter(private val onClick: (DailyWorkModel) -> Unit) :
@@ -23,12 +26,25 @@ class CustomAdapter(private val onClick: (DailyWorkModel) -> Unit) :
         private val txtRoom: TextView = itemView.findViewById(R.id.txtRoom)
         private val txtTime: TextView = itemView.findViewById(R.id.txtTime)
         private var currentDailyWorkModel: DailyWorkModel? = null
+        private var checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
+
+        //get info Teacher
+        val prefs = itemView.getContext().getSharedPreferences("ID", AppCompatActivity.MODE_PRIVATE)
+        val teacher = prefs.getString(
+            "teacher",
+            "{}"
+        ) //"No name defined" is the default value.
+        val teacherInfo = JSONObject(teacher)
 
         init {
             itemView.setOnClickListener {
                 currentDailyWorkModel?.let {
                     onClick(it)
                 }
+            }
+            val username = teacherInfo.getString("username")
+            if (username.equals("phac")) {
+                checkBox.isEnabled = true
             }
         }
 

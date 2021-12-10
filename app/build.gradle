@@ -65,6 +65,8 @@ dependencies {
 
     //dropdown
     implementation "com.github.skydoves:powerspinner:1.1.9"
+    //Slider
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

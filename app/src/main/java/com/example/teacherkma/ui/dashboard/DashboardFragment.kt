@@ -44,6 +44,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     var dailyWorkList : ArrayList<DailyWorkModel> = ArrayList()
 
     var headerAdapter = HeaderAdapter(context)
+    var url = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -120,7 +121,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         val concatAdapter = ConcatAdapter(headerAdapter, customAdapter)
         recyclerviewList.adapter = concatAdapter
 
-        val url = Config.getValue() + "/DailyWork/GetDailyWorkByTeacherId?teacherId=" + teacherInfo.getString("id")
+        url = Config.getValue() + "/DailyWork/GetDailyWorkByTeacherId?teacherId=" + teacherInfo.getString("id")
 
         println(url)
 
@@ -193,6 +194,53 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         println("hihi")
+        val progressBar: ProgressBar = binding.progressBar
+        val customAdapter = CustomAdapter { myModel -> adapterOnClick(myModel) }
+        val concatAdapter = ConcatAdapter(headerAdapter, customAdapter)
+        val recyclerviewList: RecyclerView = binding.recyclerviewList
+        recyclerviewList.adapter = concatAdapter
+        progressBar.isVisible = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            progressBar.setProgress(1, true)
+        }
+
+        val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null,
+            { response ->
+                println("Response: %s".format(response.toString()))
+                val jsonArr = JSONArray(response.toString())
+                val n = jsonArr.length() - 1
+                dailyWorkList = ArrayList()
+                for (item in 0..n) {
+                    val obj = jsonArr.getJSONObject(item)
+                    val m = DailyWorkModel(
+                        obj.getString("id"),
+                        obj.getString("teacherId"),
+                        obj.getString("subjectId"),
+                        obj.getString("subjectName"),
+                        obj.getString("date"),
+                        obj.getInt("lesson"),
+                        obj.getString("room"),
+                        obj.getInt("state"),
+                        obj.getString("startTime"),
+                        obj.getString("endTime"),
+                    )
+                    dailyWorkList.add(m)
+                }
+                customAdapter.submitList(dailyWorkList)
+                progressBar.stopNestedScroll()
+                progressBar.visibility = View.INVISIBLE
+            },
+            { err ->
+                // TODO: Handle error
+                println(err)
+                progressBar.stopNestedScroll()
+                progressBar.visibility = View.INVISIBLE
+            }
+        )
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(requireActivity().applicationContext).addToRequestQueue(jsonRequest)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {

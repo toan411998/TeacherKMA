@@ -3,13 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.30972222222222223" />
         <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/drawable/my_border.xml" value="0.2755208333333333" />
         <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/activity_add_daily_work.xml" value="0.33" />
         <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/activity_login.xml" value="0.259375" />
         <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/activity_main.xml" value="0.259375" />
         <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/fragment_dashboard.xml" value="0.259375" />
+        <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/fragment_notifications.xml" value="0.2953703703703704" />
         <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/header_item.xml" value="0.67" />
         <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/my_item.xml" value="0.33" />
+        <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/layout/nav_header.xml" value="0.2953703703703704" />
+        <entry key="..\:/Tung mtp/CodeAndroid/app/src/main/res/menu/drawer_navigation.xml" value="0.2953703703703704" />
       </map>
     </option>
   </component>

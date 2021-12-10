@@ -75,6 +75,15 @@ class LoginActivity : AppCompatActivity() {
                             progressBar.stopNestedScroll()
 
                             val obj = JSONObject(response.toString())
+                            var numOfStudyLesson = 0
+                            if (obj.getString("numOfStudyLesson").isNullOrEmpty()) {
+                                numOfStudyLesson = 0
+                            }
+
+                            var numOfTeachingLesson = 0
+                            if (obj.getString("numOfTeachingLesson").isNullOrEmpty()) {
+                                numOfTeachingLesson = 0
+                            }
                             val teacher = TeacherModel(
                                 obj.getString("id"),
                                 obj.getString("username"),
@@ -82,8 +91,8 @@ class LoginActivity : AppCompatActivity() {
                                 obj.getString("gender"),
                                 obj.getString("majorsId"),
                                 obj.getString("image"),
-                                obj.getInt("numOfStudyLesson"),
-                                obj.getInt("numOfTeachingLesson"),
+                                numOfStudyLesson,
+                                numOfTeachingLesson,
                                 obj.getString("date"),
                                 obj.getString("address"),
                                 obj.getString("phone"),

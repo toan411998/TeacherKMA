@@ -7,11 +7,21 @@
     <item
         android:id="@+id/dashboardFragment"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="Account" />
+        android:title="Thông tin cá nhân" />
+
+    <item
+        android:id="@+id/b"
+        android:icon="@drawable/ic_baseline_bar_chart_24"
+        android:title="Tiến độ" />
+
+    <item
+        android:id="@+id/c"
+        android:icon="@drawable/ic_baseline_fiber_new_24"
+        android:title="Thông báo mới" />
 
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Settings" />
+        android:title="Cài đặt" />
 
 </menu>
