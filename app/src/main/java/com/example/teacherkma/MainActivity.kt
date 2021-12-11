@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-//                R.id.profileFragment -> hideBottomNavigation()
+                R.id.profileFragment -> hideBottomNavigation()
+                R.id.processFragment -> hideBottomNavigation()
                 R.id.settingsFragment -> hideBothNavigation()
                 else -> showBothNavigation()
             }

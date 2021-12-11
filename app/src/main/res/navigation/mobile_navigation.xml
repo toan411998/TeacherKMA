@@ -29,4 +29,16 @@
         android:label="Settings"
         tools:layout="@layout/settings_fragment" />
 
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.teacherkma.ui.profile.ProfileFragment"
+        android:label="Thông tin cá nhân"
+        tools:layout="@layout/profile_fragment" />
+
+    <fragment
+        android:id="@+id/processFragment"
+        android:name="com.example.teacherkma.ui.process.ProcessFragment"
+        android:label="Tiến độ"
+        tools:layout="@layout/process_fragment" />
+
 </navigation>

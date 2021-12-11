@@ -5,12 +5,12 @@
     <!--Each item id should be same as in the nav_graph fragment id-->
 
     <item
-        android:id="@+id/dashboardFragment"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Thông tin cá nhân" />
 
     <item
-        android:id="@+id/b"
+        android:id="@+id/processFragment"
         android:icon="@drawable/ic_baseline_bar_chart_24"
         android:title="Tiến độ" />
 
