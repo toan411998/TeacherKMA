@@ -13,9 +13,10 @@ data class TeacherModel(
     var address: String,
     var phone: String,
     var mail: String,
-    var password: String
+    var password: String,
+    var role: String
 ) {
     override fun toString(): String {
-        return "{id='$id', username='$username', name='$name', gender='$gender', majorsId='$majorsId', image='$image', numOfStudyLesson=$numOfStudyLesson, numOfTeachingLesson=$numOfTeachingLesson, date='$date', address='$address', phone='$phone', mail='$mail', password='$password'}"
+        return "{id='$id', username='$username', name='$name', gender='$gender', majorsId='$majorsId', image='$image', numOfStudyLesson=$numOfStudyLesson, numOfTeachingLesson=$numOfTeachingLesson, date='$date', address='$address', phone='$phone', mail='$mail', password='$password', role='$role'}"
     }
 }

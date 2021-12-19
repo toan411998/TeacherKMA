@@ -25,8 +25,7 @@ import com.example.teacherkma.utils.hideSoftKeyboard
 import org.json.JSONArray
 import org.json.JSONObject
 import android.content.SharedPreferences
-
-
+import com.example.teacherkma.MainManagerActivity
 
 
 class LoginActivity : AppCompatActivity() {
@@ -98,6 +97,7 @@ class LoginActivity : AppCompatActivity() {
                                 obj.getString("phone"),
                                 obj.getString("mail"),
                                 obj.getString("password"),
+                                obj.getString("role")
                             )
 
                             val sharedPref = getSharedPreferences("ID", MODE_PRIVATE).edit()
@@ -114,9 +114,15 @@ class LoginActivity : AppCompatActivity() {
                             val t = JSONObject(user)
                             println(t.getString("id"))
 
+                            if (teacher.role == "manager") {
+                                val intent = Intent(this, MainManagerActivity::class.java)
+                                startActivity(intent)
+                            }
+                            else {
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                            }
 
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
                         },
                         { err ->
                             // TODO: Handle error

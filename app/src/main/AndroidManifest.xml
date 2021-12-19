@@ -13,9 +13,13 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MainManagerActivity"
+            android:label="Khoa công nghệ thông tin"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,21 +29,23 @@
         <activity
             android:name=".activity.AddDailyWorkActivity"
             android:exported="false"
-            android:theme="@style/Theme.TeacherKMA"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TeacherKMA" />
         <activity
             android:name=".activity.DetailActivity"
-            android:theme="@style/Theme.TeacherKMA"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TeacherKMA" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.NoActionBar"
-            android:label="@string/app_name">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:label="@string/app_name"
+            android:theme="@style/Theme.NoActionBar">
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
     </application>
 
