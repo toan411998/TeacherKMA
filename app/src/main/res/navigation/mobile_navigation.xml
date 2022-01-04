@@ -41,4 +41,10 @@
         android:label="Tiến độ"
         tools:layout="@layout/process_fragment" />
 
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.teacherkma.ui.news.NewsFragment"
+        android:label="Thông báo mới"
+        tools:layout="@layout/news_fragment" />
+
 </navigation>

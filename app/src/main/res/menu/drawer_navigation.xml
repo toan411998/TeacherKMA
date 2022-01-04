@@ -15,7 +15,7 @@
         android:title="Tiến độ" />
 
     <item
-        android:id="@+id/c"
+        android:id="@+id/newsFragment"
         android:icon="@drawable/ic_baseline_fiber_new_24"
         android:title="Thông báo mới" />
 
@@ -23,5 +23,9 @@
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="Cài đặt" />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Đăng xuất" />
 
 </menu>

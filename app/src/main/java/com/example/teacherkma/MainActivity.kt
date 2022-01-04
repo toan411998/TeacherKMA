@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.main_nav_host) //Initialising navController
 
         appBarConfiguration = AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard,
-            R.id.navigation_notifications, R.id.settingsFragment, R.id.settingsFragment) //Pass the ids of fragments from nav_graph which you don't want to show back button in toolbar
+            R.id.navigation_notifications) //Pass the ids of fragments from nav_graph which you don't want to show back button in toolbar
             .setOpenableLayout(binding.mainDrawerLayout) //Pass the drawer layout id from activity xml
             .build()
 
@@ -51,7 +51,8 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.profileFragment -> hideBottomNavigation()
                 R.id.processFragment -> hideBottomNavigation()
-                R.id.settingsFragment -> hideBothNavigation()
+                R.id.settingsFragment -> hideBottomNavigation()
+                R.id.newsFragment -> hideBottomNavigation()
                 else -> showBothNavigation()
             }
         }

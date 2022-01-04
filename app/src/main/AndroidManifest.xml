@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TeacherKMA"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AddReportActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TeacherKMA" />
         <activity
             android:name=".MainManagerActivity"
             android:label="Khoa công nghệ thông tin"
@@ -33,6 +47,7 @@
             android:theme="@style/Theme.TeacherKMA" />
         <activity
             android:name=".activity.DetailActivity"
+            android:label="Duyệt"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TeacherKMA" />
         <activity

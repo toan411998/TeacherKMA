@@ -121,8 +121,8 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         val concatAdapter = ConcatAdapter(headerAdapter, customAdapter)
         recyclerviewList.adapter = concatAdapter
 
-        url = Config.getValue() + "/DailyWork/GetDailyWorkByTeacherId?teacherId=" + teacherInfo.getString("id")
-
+//        url = Config.getValue() + "/DailyWork/GetDailyWorkByTeacherId?teacherId=" + teacherInfo.getString("id")
+        url = Config.getValue() + "/DailyWork"
         println(url)
 
         val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null,

@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
                         progressBar.setProgress(1, true)
                     }
                     val url = Config.getValue() + "/Teacher/GetTeacher?username=" + txtUsername.text + "&password=" + txtPassword.text
-
+                    println(url)
                     val jsonRequest = JsonObjectRequest(
                         Request.Method.GET, url, null,
                         { response ->
