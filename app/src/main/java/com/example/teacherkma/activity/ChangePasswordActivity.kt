@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -47,6 +44,8 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         val animShake = AnimationUtils.loadAnimation(this, R.anim.shake)
 
+        val progressBar2: ProgressBar = findViewById(R.id.progressBar2)
+
         btnConfirm.setOnClickListener {
             if (txtPassword.text.isNullOrEmpty()) {
                 txtPassword.startAnimation(animShake)
@@ -65,10 +64,15 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         pinView.setOnCompletedListener = { pinCode ->
-            if(pinCode == "1234") {
+            val pURL = Config.getValue() + "/PINTeacher/GetPIN?teacherId=" + teacherInfo.getString("id") + "&pin=" + pinCode
+            println(pURL)
+            val pRequest = JsonObjectRequest(Request.Method.GET, pURL, null, {
+                response ->
                 Toast.makeText(this, "Mã PIN đúng", Toast.LENGTH_SHORT).show()
                 pinView.visibility = View.INVISIBLE
                 llBody.visibility = View.VISIBLE
+                progressBar2.visibility = View.VISIBLE
+                progressBar2.startNestedScroll(1)
                 val url = Config.getValue() + "/Teacher/EditTeacher?oldPass=" + teacherInfo.getString("password") + "&newPass=" + txtNewPassword.text
                 println(url)
 
@@ -80,22 +84,27 @@ class ChangePasswordActivity : AppCompatActivity() {
                     Request.Method.PUT, url, json,
                     { response ->
                         println("Response: %s".format(response.toString()))
-
-
+                        progressBar2.visibility = View.INVISIBLE
+                        progressBar2.stopNestedScroll()
+                        finish()
+                        Toast.makeText(this, "Đổi mật khẩu thành công", Toast.LENGTH_LONG).show()
                     },
                     { err ->
                         // TODO: Handle error
                         println(err)
-
+                        progressBar2.visibility = View.INVISIBLE
+                        progressBar2.stopNestedScroll()
                         Toast.makeText(this, "Mật khẩu cũ không đúng!", Toast.LENGTH_SHORT).show()
                     }
                 )
 
                 // Access the RequestQueue through your singleton class.
                 MySingleton.getInstance(this).addToRequestQueue(jsonRequest)
-            }
-            else
+            }, {
+                error ->
                 Toast.makeText(this, "Mã PIN sai", Toast.LENGTH_SHORT).show()
+            })
+            MySingleton.getInstance(this).addToRequestQueue(pRequest)
 
             pinView.clearPin()
         }

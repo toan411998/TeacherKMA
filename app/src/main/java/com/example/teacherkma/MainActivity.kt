@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
             .setOpenableLayout(binding.mainDrawerLayout) //Pass the drawer layout id from activity xml
             .build()
 
-
         setSupportActionBar(binding.mainToolbar) //Set toolbar
 
         setupActionBarWithNavController(navController, appBarConfiguration) //Setup toolbar with back button and drawer icon according to appBarConfiguration

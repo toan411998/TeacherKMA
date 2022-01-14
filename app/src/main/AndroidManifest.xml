@@ -46,7 +46,7 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TeacherKMA" />
         <activity
-            android:name=".activity.DetailActivity"
+            android:name=".activity.DetailDailyWorkActivity"
             android:label="Duyệt"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TeacherKMA" />

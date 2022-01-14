@@ -42,10 +42,6 @@ class CustomAdapter(private val onClick: (DailyWorkModel) -> Unit) :
                     onClick(it)
                 }
             }
-            val username = teacherInfo.getString("username")
-            if (username.equals("phac")) {
-                checkBox.isEnabled = true
-            }
         }
 
         /* Bind DailyWorkModel name and image. */
@@ -56,6 +52,12 @@ class CustomAdapter(private val onClick: (DailyWorkModel) -> Unit) :
             txtDate.text = DailyWorkModel.date
             txtRoom.text = DailyWorkModel.room
             txtTime.text = DailyWorkModel.startTime + " - " + DailyWorkModel.endTime
+
+            if (DailyWorkModel.state == 1) {
+                checkBox.isChecked = true
+            } else {
+                checkBox.isChecked = false
+            }
         }
     }
 

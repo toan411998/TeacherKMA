@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.teacherkma.activity.AddDailyWorkActivity
-import com.example.teacherkma.activity.DetailActivity
+import com.example.teacherkma.activity.DetailDailyWorkActivity
 import com.example.teacherkma.adapter.CustomAdapter
 import com.example.teacherkma.adapter.HeaderAdapter
 import com.example.teacherkma.config.Config
@@ -45,6 +45,8 @@ class DashboardFragment : Fragment(), View.OnClickListener {
 
     var headerAdapter = HeaderAdapter(context)
     var url = ""
+    var type = "lesson"
+    var isStudy = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,18 +79,78 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         // this creates a vertical layout Manager
         recyclerviewList.layoutManager = LinearLayoutManager(context)
 
+        val customAdapter = CustomAdapter { myModel -> adapterOnClick(myModel) }
+
+//        val customAdapter = CustomAdapter(list)
+
+        val concatAdapter = ConcatAdapter(headerAdapter, customAdapter)
+        recyclerviewList.adapter = concatAdapter
+
         dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
 
-        headerAdapter = HeaderAdapter(context)
-        headerAdapter.HeaderAdapter(context)
+        headerAdapter.HeaderAdapter(context, isStudy)
 
         headerAdapter.onClickListener = object : HeaderAdapter.DetailsAdapterListener {
             override fun onClickSearch(v: View?) {
                 println(headerAdapter.isStudy)
                 println(headerAdapter.startDate)
                 println(headerAdapter.endDate)
+                progressBar.startNestedScroll(1)
+                progressBar.visibility = View.VISIBLE
+                if (headerAdapter.isStudy) {
+                    type = "study"
+                    isStudy = true
+                } else {
+                    type = "lesson"
+                    isStudy = false
+                }
+                url = Config.getValue() + "/DailyWork/GetDailyWorkByTeacherId?teacherId=" + teacherInfo.getString("id") + "&type=" + type
+                val role = teacherInfo.getString("role")
+                if (role.equals("manager")) {
+                    url = Config.getValue() + "/DailyWork"
+                }
+//        url = Config.getValue() + "/DailyWork"
+                println(url)
+
+                val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null,
+                    { response ->
+                        println("Response: %s".format(response.toString()))
+                        val jsonArr = JSONArray(response.toString())
+                        val n = jsonArr.length() - 1
+                        dailyWorkList = ArrayList()
+                        for (item in 0..n) {
+                            val obj = jsonArr.getJSONObject(item)
+                            val m = DailyWorkModel(
+                                obj.getString("id"),
+                                obj.getString("teacherId"),
+                                obj.getString("subjectId"),
+                                obj.getString("subjectName"),
+                                obj.getString("date"),
+                                obj.getInt("lesson"),
+                                obj.getString("room"),
+                                obj.getInt("state"),
+                                obj.getString("startTime"),
+                                obj.getString("endTime"),
+                            )
+                            dailyWorkList.add(m)
+                        }
+                        customAdapter.submitList(dailyWorkList)
+                        progressBar.stopNestedScroll()
+                        progressBar.visibility = View.INVISIBLE
+                    },
+                    { err ->
+                        // TODO: Handle error
+                        println(err)
+                        progressBar.stopNestedScroll()
+                        progressBar.visibility = View.INVISIBLE
+                    }
+                )
+
+                // Access the RequestQueue through your singleton class.
+                MySingleton.getInstance(requireActivity().applicationContext).addToRequestQueue(jsonRequest)
+                recyclerviewList.adapter = concatAdapter
             }
 
         }
@@ -114,15 +176,14 @@ class DashboardFragment : Fragment(), View.OnClickListener {
             }
         )
 
-        val customAdapter = CustomAdapter { myModel -> adapterOnClick(myModel) }
 
-//        val customAdapter = CustomAdapter(list)
 
-        val concatAdapter = ConcatAdapter(headerAdapter, customAdapter)
-        recyclerviewList.adapter = concatAdapter
-
-//        url = Config.getValue() + "/DailyWork/GetDailyWorkByTeacherId?teacherId=" + teacherInfo.getString("id")
-        url = Config.getValue() + "/DailyWork"
+        url = Config.getValue() + "/DailyWork/GetDailyWorkByTeacherId?teacherId=" + teacherInfo.getString("id") + "&type=" + type
+//        url = Config.getValue() + "/DailyWork"
+        val role = teacherInfo.getString("role")
+        if (role.equals("manager")) {
+            url = Config.getValue() + "/DailyWork"
+        }
         println(url)
 
         val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null,
@@ -186,8 +247,9 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     }
 
     /* Opens Activity when RecyclerView item is clicked. */
-    private fun adapterOnClick(flower: DailyWorkModel) {
-        val intent = Intent (activity, DetailActivity::class.java)
+    private fun adapterOnClick(data: DailyWorkModel) {
+        val intent = Intent (activity, DetailDailyWorkActivity::class.java)
+        intent.putExtra("dailyWork", data.toString())
         activity?.startActivityFromFragment(this, intent, REQUEST_CODE)
     }
 

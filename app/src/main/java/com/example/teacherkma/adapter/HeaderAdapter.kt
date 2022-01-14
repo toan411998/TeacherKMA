@@ -28,8 +28,9 @@ class HeaderAdapter(context: Context?) : RecyclerView.Adapter<HeaderAdapter.Head
     public var startDate: String = ""
     public var endDate: String = ""
 
-    fun HeaderAdapter(context: Context?) {
+    fun HeaderAdapter(context: Context?, isStudy: Boolean) {
         this.context = context
+        this.isStudy = isStudy
     }
 
     /* ViewHolder for displaying header. */
@@ -57,6 +58,11 @@ class HeaderAdapter(context: Context?) : RecyclerView.Adapter<HeaderAdapter.Head
     /* Binds number of flowers to the header. */
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         holder.bind(flowerCount)
+        if (isStudy) {
+            holder.radioButtonStudy.isChecked = true
+        } else {
+            holder.radioButtonTeach.isChecked = true
+        }
         holder.radioButtonTeach.setOnClickListener {
 //            onClickListener?.onClickTeach(it)
             isStudy = false
